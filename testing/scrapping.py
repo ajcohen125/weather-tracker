@@ -15,25 +15,25 @@ class MyHTMLParser(HTMLParser):
 
 
 #Set url and open page
-#url = "https://weather.com/weather/today/l/32.7874,-96.7989"
-url = str(sys.argv[1])
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
- 
-req = Request(url=url, headers=headers)
+#url = "https://roberteads.github.io"
 
+url = str(sys.argv[1]) #Allows URL to be passed throught from runtime
+
+#Helps reading the page
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'} 
+req = Request(url=url, headers=headers)
 page = urlopen(req)
 
 #Read the page
 html_bytes = page.read()
 html = html_bytes.decode("utf-8")
 
-print("The following is the HTML of the webpage after being written to the file and read back again\n")
-
-#print(html)
-write_file = open("HTML.htm", "w")
+#writing the raw html data to a file
+write_file = open("raw_html.htm", "w")
 write_file.write(html)
 write_file.close()
 
+#Feeding raw html through parser to determine data
 parser = MyHTMLParser()
 parser.feed(html)
 
