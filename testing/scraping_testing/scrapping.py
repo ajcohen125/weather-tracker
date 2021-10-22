@@ -4,14 +4,22 @@ import sys
 from html.parser import HTMLParser
 
 class MyHTMLParser(HTMLParser):
+    _found = False
+    _element_types = ["h1"]
+
     def handle_starttag(self, tag, attrs):
-        print("Encountered a start tag:", tag)
+        if tag in self._element_types:
+            self._found = True
+            print("Encountered a start tag:", tag)
 
     def handle_endtag(self, tag):
-        print("Encountered an end tag :", tag)
+        if self._found:    
+            self._found = False
+            print("Encountered an end tag :", tag)
 
     def handle_data(self, data):
-        print("Encountered some data  :", data)
+        if self._found:
+            print("Encountered some data  :", data)
 
 
 #Set url and open page
