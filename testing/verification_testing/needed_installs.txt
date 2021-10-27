@@ -1,4 +1,0 @@
-#Python "requests" Package & Update
-python -m pip install requests
-/home/playground/.pyenv/versions/3.9.0/bin/python -m pip install --upgrade pip
-
