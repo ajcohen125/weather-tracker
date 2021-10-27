@@ -39,3 +39,16 @@ else:
 #FIXME - Commets on stuff that need to be fixed
 #Functionize this
 #Don't use read and writes - lists and logs being passed around from main
+
+
+#Make the following a different functions
+#Check to make sure I can connect to the internet by pinging google or something
+#Use try-catch to make sure internet
+#use both ping method and request (curl) method
+#Retry 5 times in 30 (maybe make it where you can pass in num tries and time between tries)
+#Return an error code and message if it doesn't work after those tries and exit in main
+#If no problems, return good
+
+
+#Check data base connection (place holder and let Aaron fill in code)
+
