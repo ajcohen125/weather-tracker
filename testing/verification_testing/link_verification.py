@@ -34,5 +34,8 @@ else:
     print("All links are good")
 
 #FIXME - Create main to require a success or fail from this script
-#FIXME - Impliment some sort of system to notifiy user if link fails
 
+
+#FIXME - Commets on stuff that need to be fixed
+#Functionize this
+#Don't use read and writes - lists and logs being passed around from main
