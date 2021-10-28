@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 import requests
 import sys
 import custom_logging as log

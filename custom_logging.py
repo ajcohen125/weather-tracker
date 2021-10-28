@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.9
+
 from datetime import datetime
 
 #Assuming logging file is open for all functions
