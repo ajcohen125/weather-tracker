@@ -4,11 +4,6 @@ import requests
 import sys
 import custom_logging as log
 
-def database_connection():
-    #FIXME - Saving for code written by Aaron
-    return 0
-
-
 def internet_connection():
     #FIXME - Figure out how to check internet connection
     return 0

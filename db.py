@@ -3,6 +3,7 @@
 ## Connections to mysql database 
 
 import mysql.connector
+from mysql.connector import errorcode
 
 def readDatabase(cnx=mysql.connector):
     print("Reading from database")
@@ -22,8 +23,16 @@ def writeToDatabase(cnx=mysql.connector):
 def openConnection(user_name, passwd, host_ip, db):
     print("Opening connection to Database")
     
-    cnx = mysql.connector.connect(user=user_name, password=passwd,
-        host=host_ip, database=db)
+    try:
+        cnx = mysql.connector.connect(user=user_name, password=passwd,
+            host=host_ip, database=db)
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
 
     return cnx
 
