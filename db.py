@@ -4,14 +4,6 @@
 
 import mysql.connector
 
-config = {
-  'user': 'temp',
-  'password': 'Password1!',
-  'host': '192.168.1.222',
-  'database': 'temp',
-  'raise_on_warnings': True
-}
-
 def readDatabase(cnx=mysql.connector):
     print("Reading from database")
     
@@ -27,10 +19,11 @@ def readDatabase(cnx=mysql.connector):
 def writeToDatabase(cnx=mysql.connector):
     print("Writing to Databsase")
 
-def openConnection():
+def openConnection(user_name, passwd, host_ip, db):
     print("Opening connection to Database")
-
-    cnx = mysql.connector.connect(**config)
+    
+    cnx = mysql.connector.connect(user=user_name, password=passwd,
+        host=host_ip, database=db)
 
     return cnx
 
