@@ -3,6 +3,7 @@
 import requests
 import sys
 #import custom_logging as log
+import email_functions as email
 
 def internet_connection():
     #FIXME - Figure out how to check internet connection
@@ -47,8 +48,10 @@ def website_urls(links_dict, log_file, timeout_time = 1):
         verified_links[key] = links_dict[key]
         print("Successfully verified \"{0}\"".format(key))
 
+    if broken_links: 
+        contacts = []   #Recipient email addresses
+        email.send_broken_links(contacts, broken_links)
 
-    #Call email function to email us the broken links list
     return verified_links
 
 
