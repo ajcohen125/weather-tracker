@@ -2,19 +2,34 @@
 
 import requests
 import sys
-import custom_logging as log
+#import custom_logging as log
 
 def internet_connection():
     #FIXME - Figure out how to check internet connection
     return 0
 
 
-def website_urls(links_dict, log_file):
+def website_urls(links_dict, log_file, timeout_time = 1):
+
     for key in links_dict:
-        response = requests.get(links_dict[key])
-        if response.status_code != 200:
-            log.log_warning(log_file, "\"" + key + "\"" + " link is broken.")
-    return 0
+        try:
+            response = requests.get(links_dict[key], timeout = timeout_time)
+            
+            if response.status_code % 100 != 2:
+                response.raise_for_status()
+
+        except requests.exceptions.Timeout as err:      #FIXME - replace print statments with log output for final version
+            print("Timed out while attempting connection to \"{0}\" (Timeout = {1} sec)".format(key, timeout_time))
+        except requests.exceptions.RequestException as err:
+            if type(err) == requests.exceptions.HTTPError:
+                print("\"{0}\" gave HTTP error code: {1}".format(key, response.status_code))
+            elif type(err) == requests.exceptions.ConnectionError:
+                print("Failed connection to \"{0}\"".format(key))
+            else:
+                print(err)
+
+    #Create system to email us file with bad links
+    return 0    #Figure out a way to write a return for the function give a "Go ahead" signal
 
 
 
