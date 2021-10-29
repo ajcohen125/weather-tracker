@@ -11,6 +11,9 @@ def internet_connection():
 
 def website_urls(links_dict, log_file, timeout_time = 1):
 
+    verified_links = {} #Dict of good links
+    broken_links = []   #List of 3 item tuples with broken link information
+
     for key in links_dict:
         try:
             response = requests.get(links_dict[key], timeout = timeout_time)
@@ -20,31 +23,33 @@ def website_urls(links_dict, log_file, timeout_time = 1):
 
         except requests.exceptions.Timeout as err:      #FIXME - replace print statments with log output for final version
             print("Timed out while attempting connection to \"{0}\" (Timeout = {1} sec)".format(key, timeout_time))
+            broken_link_info = (key, "Timeout Error", links_dict[key])
+            broken_links.append(broken_link_info)
             continue
 
         except requests.exceptions.RequestException as err:
             if type(err) == requests.exceptions.HTTPError:
                 print("\"{0}\" gave HTTP error code: {1}".format(key, response.status_code))
-                continue
+                reason = "HTTP error code: {0}".format(response.status_code)
 
             elif type(err) == requests.exceptions.ConnectionError:
                 print("Failed connection to \"{0}\"".format(key))
-                continue
-
+                reason = "Connection Error"
             else:
                 print(err)
-                continue
+                reason = type(err)
+        
+            broken_link_info = (key, reason, links_dict[key])
+            broken_links.append(broken_link_info)
+            continue
 
-    return 0
-                
-                ### Next Steps ###
-                #Make a good dict to return to the program and log each link as success under [INFO]
-                #Log bad link errors to the log file and to the console with [WARNING]
-                #Email us bad dict with broken links and  verification error type for each broken link (timeout, 404, etc)
 
-                ### Other ###
-                #Update log file to also print to console 
-                #Look into ifdef type thing or optional argument for easy switchting between log and log/console
+        verified_links[key] = links_dict[key]
+        print("Successfully verified \"{0}\"".format(key))
+
+
+    #Call email function to email us the broken links list
+    return verified_links
 
 
 #FIXME - Commets on stuff that need to be implimented
