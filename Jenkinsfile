@@ -4,7 +4,6 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running Test automation'
-                # TODO: run tests
             }
         }
         stage('Build Docker Image') {
