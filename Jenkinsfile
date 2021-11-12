@@ -43,7 +43,9 @@ pipeline {
             }
         }
         stage('Clean workspace after run') {
-            cleanWs notFailBuild: true
+            steps {
+                cleanWs notFailBuild: true
+            }
         }
     }
 }
