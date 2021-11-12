@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("192.168.1.220:8083/weather-tracker")
+                    app = docker.build("weather-tracker")
                 }
             }
         }
