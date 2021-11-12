@@ -36,9 +36,7 @@ pipeline {
         }
         stage('Create archive') {
             steps {
-                    script {
-                        tar cvzf weather-tracker.tar.gz *.py testing/ Dockerfile
-                    }
+                    sh 'tar cvzf weather-tracker.tar.gz *.py testing/ Dockerfile'
                     archiveArtifacts artifacts: 'weather-tracker.tar.gz', followSymlinks: false
                 }
             }
