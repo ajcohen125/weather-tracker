@@ -17,6 +17,8 @@ def main():
     print("I'm in the main")
     cnx = db.openConnection(user_name=config['user'], passwd=config['password'], host_ip=config['host'], db=config['database'])
 
+    db.writeToDatabase(cnx)
+
     db.readDatabase(cnx)
 
     db.closeConnection(cnx)
