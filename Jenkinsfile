@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                echo 'Running Test automation'
+                sh "echo 'Running Test automation'"
             }
         }
         stage('Build Docker Image') {
@@ -22,9 +22,6 @@ pipeline {
 
         }
         stage('Push Docker Image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
                     docker.withRegistry('http://192.168.1.220:8083/docker-private', 'nexus_login') {
@@ -44,6 +41,9 @@ pipeline {
             steps {
                 nexusArtifactUploader artifacts: [[artifactId: 'weather-tracker', classifier: '', file: 'weather-tracker.tar.gz', type: 'tar.gz']], credentialsId: 'nexus_login', groupId: 'weather-tracker', nexusUrl: '192.168.1.220:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'weather-tracker', version: "${env.BUILD_NUMBER}"
             }
+        }
+        stage('Clean workspace after run') {
+            cleanWs notFailBuild: true
         }
     }
 }
