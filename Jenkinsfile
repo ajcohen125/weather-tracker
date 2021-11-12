@@ -14,7 +14,11 @@ pipeline {
             }
         }
         stage('Run Docker Image') {
-
+            steps {
+                script {
+                    echo "Hello from Run Docker Image"
+                }
+            }
 
         }
         stage('Push Docker Image') {
@@ -33,13 +37,13 @@ pipeline {
         stage('Create archive') {
             steps {
                     script {
-                        tar cvzf weather-tracker-${env.BUILD_NUBMER}.tar.gz *.py testing/ Dockerfile
+                        tar cvzf weather-tracker.tar.gz *.py testing/ Dockerfile
                     }
-                    archiveArtifacts artifacts: 'weather-tracker-${env.BUILD_NUMBER}.tar.gz', followSymlinks: false
+                    archiveArtifacts artifacts: 'weather-tracker.tar.gz', followSymlinks: false
                 }
             }
         stage('Push Archive to Nexus') {
-                nexusArtifactUploader artifacts: [[artifactId: 'weather-tracker', classifier: '', file: 'weather-tracker-${env.BUILD_NUMBER}.tar.gz', type: 'tar.gz']], credentialsId: 'nexus_login', groupId: 'weather-tracker', nexusUrl: '192.168.1.220:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'weather-tracker', version: '${env.BUILD_NUMBER}'
+                nexusArtifactUploader artifacts: [[artifactId: 'weather-tracker', classifier: '', file: 'weather-tracker.tar.gz', type: 'tar.gz']], credentialsId: 'nexus_login', groupId: 'weather-tracker', nexusUrl: '192.168.1.220:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'weather-tracker', version: "${env.BUILD_NUMBER}"
         }
     }
 }
