@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.9
 
+
 import custom_logging as log
 
 def test_open_file():
@@ -24,3 +25,7 @@ def test_log_error():
 def test_close_file():
     log.close_file()
 
+#Main
+test_open_file()
+test_log_error()
+test_close_file()
