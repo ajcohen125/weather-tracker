@@ -39,7 +39,7 @@ pipeline {
             }
         stage('Push Archive to Nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'weather-tracker', classifier: '', file: 'weather-tracker.tar.gz', type: 'tar.gz']], credentialsId: 'nexus_login', groupId: 'weather-tracker', nexusUrl: '192.168.1.220:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'weather-tracker', version: "${env.BUILD_NUMBER}"
+                nexusArtifactUploader artifacts: [[artifactId: 'weather-tracker', classifier: '', file: 'weather-tracker.tar.gz', type: 'tar.gz']], credentialsId: 'nexus_login', groupId: 'weather-tracker', nexusUrl: '192.168.1.220:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Artifacts', version: "${env.BUILD_NUMBER}"
             }
         }
         stage('Clean workspace after run') {
