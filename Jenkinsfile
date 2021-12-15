@@ -24,7 +24,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('http://192.168.1.220:8083/docker-private', 'nexus_login') {
+                    docker.withRegistry('http://192.168.1.220:5000/docker-private', 'nexus_login') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
